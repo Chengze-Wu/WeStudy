@@ -1,0 +1,26 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+
+
+
+        <nl.joery.animatedbottombar.AnimatedBottomBar
+            android:id="@+id/bottomNavViewBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:abb_indicatorAppearance="round"
+            app:abb_tabColorSelected="@color/colorPrimary"
+            app:abb_indicatorColor="@color/colorPrimary"
+            app:abb_tabs="@menu/bottom_navigation_menu"
+            app:abb_selectedIndex="1"/>
+
+    </RelativeLayout>
+
+
+
+</merge>
