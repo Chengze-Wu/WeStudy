@@ -1,6 +1,7 @@
 package com.appliedproject.westudy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,49 +9,49 @@ import android.os.Handler;
 import android.view.View;
 
 import com.appliedproject.westudy.R;
+import com.appliedproject.westudy.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.royrodriguez.transitionbutton.TransitionButton;
 import com.royrodriguez.transitionbutton.utils.WindowUtils;
 
 public class MainActivity extends AppCompatActivity {
-    private TransitionButton transitionButton;
+
+    private GoogleSignInClient mSignInClient;
+
+    private ActivityMainBinding mBinding;
+    private LinearLayoutManager mLinearLayoutManager;
+
+    //Firebase Instance
+    private FirebaseAuth mFirebaseAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WindowUtils.makeStatusbarTransparent(this);
-        getSupportActionBar().hide();
 
-        transitionButton = findViewById(R.id.transition_button);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        if (mFirebaseAuth.getCurrentUser() == null){
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
 
-        transitionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Then start the loading animation when the user tap the button
-                transitionButton.startAnimation();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mSignInClient = GoogleSignIn.getClient(this, gso);
 
-                // Do your networking task or background work here.
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean isSuccessful = true;
 
-                        if (isSuccessful) {
-                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
-                                @Override
-                                public void onAnimationStopEnd() {
-                                    Intent intent = new Intent(getBaseContext(), ActivityHome.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
-                                }
-                            });
-                        } else {
-                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
-                        }
-                    }
-                }, 2000);
-            }
-        });
+
+
+
     }
 }

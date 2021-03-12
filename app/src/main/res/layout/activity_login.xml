@@ -9,7 +9,7 @@
     tools:context=".activities.LoginActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginStart="32dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginStart="32dp"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailAddress" />
 
     <com.royrodriguez.transitionbutton.TransitionButton
         android:id="@+id/transition_button"
@@ -49,10 +49,10 @@
         app:defaultColor="#2186F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
         app:loaderColor="@android:color/white" />
     <Button
-        android:id="@+id/button_register"
+        android:id="@+id/button_web"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnRegister"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +74,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transition_button" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
     <ImageView
         android:id="@+id/imageView"

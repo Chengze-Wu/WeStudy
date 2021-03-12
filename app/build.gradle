@@ -23,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,7 +45,15 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.wear:wear:1.1.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
-    implementation 'com.google.firebase:firebase-auth:20.0.2'
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Firebase UI
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -48,4 +61,9 @@ dependencies {
     implementation 'com.royrodriguez:transitionbutton:0.2.0'
 
     implementation 'nl.joery.animatedbottombar:library:1.0.9'
+
+    // Google
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

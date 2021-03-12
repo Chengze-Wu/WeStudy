@@ -20,7 +20,7 @@
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
     <EditText
         android:id="@+id/txtEmailAddress"
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/transition_button" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgProfile"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_marginStart="8dp"
@@ -100,6 +100,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/lamp_icon" />
+        app:srcCompat="@drawable/ic_idnetity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "1077179646644",
-    "project_id": "westudy-c6f2c",
-    "storage_bucket": "westudy-c6f2c.appspot.com"
+    "project_number": "741643006692",
+    "firebase_url": "https://westudy-ac0cc-default-rtdb.firebaseio.com",
+    "project_id": "westudy-ac0cc",
+    "storage_bucket": "westudy-ac0cc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1077179646644:android:3a1ce55cda060a3f2a0de1",
+        "mobilesdk_app_id": "1:741643006692:android:d02b428ac95bfcb1b572f1",
         "android_client_info": {
           "package_name": "com.appliedproject.westudy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1077179646644-qhbmufqd4asq4kt9v3vsjuf7ie5eofhk.apps.googleusercontent.com",
+          "client_id": "741643006692-m6hkaua9o1r8pus3o47s92nk6rga6iod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appliedproject.westudy",
+            "certificate_hash": "f554c7d18799e2d0a5413dfb604fe2ef0a0f24e2"
+          }
+        },
+        {
+          "client_id": "741643006692-43h897punfa7261caje2ta90g2ir7c1h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBiN9UPUx1-c-WDmevKx_oG1p29zdZ30l4"
+          "current_key": "AIzaSyB5YAP64vGqsKts1HDa8cp-NGAzcX8P2Lk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1077179646644-qhbmufqd4asq4kt9v3vsjuf7ie5eofhk.apps.googleusercontent.com",
+              "client_id": "741643006692-43h897punfa7261caje2ta90g2ir7c1h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

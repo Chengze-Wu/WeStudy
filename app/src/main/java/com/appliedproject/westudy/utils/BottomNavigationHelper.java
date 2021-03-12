@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.appliedproject.westudy.activities.ActivityHome;
 import com.appliedproject.westudy.activities.ExploreActivity;
 import com.appliedproject.westudy.activities.ProfileActivity;
 import com.appliedproject.westudy.R;
+import com.appliedproject.westudy.activities.StudyActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +27,7 @@ public class BottomNavigationHelper {
             public void onTabSelected(int i, @Nullable AnimatedBottomBar.Tab tab, int i1, @NotNull AnimatedBottomBar.Tab tab1) {
                     switch (i){
                         case R.id.action_study:
-                            Intent studyIntent = new Intent(context, ActivityHome.class);
+                            Intent studyIntent = new Intent(context, StudyActivity.class);
                             context.startActivity(studyIntent);
                             break;
                         case R.id.action_explore:
