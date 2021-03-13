@@ -8,23 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.appliedproject.westudy.R;
 import com.appliedproject.westudy.databinding.ActivityMainBinding;
-import com.appliedproject.westudy.fragment.ExploreFragment;
+import com.appliedproject.westudy.fragment.PostFragment;
 import com.appliedproject.westudy.fragment.ProfileFragment;
+import com.appliedproject.westudy.fragment.SearchFragment;
 import com.appliedproject.westudy.fragment.StudyFragment;
+import com.appliedproject.westudy.fragment.WhiteBoardFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.royrodriguez.transitionbutton.TransitionButton;
-import com.royrodriguez.transitionbutton.utils.WindowUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new ExploreFragment()).commit();
+                new PostFragment()).commit();
 
     }
 
@@ -79,13 +76,19 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new StudyFragment();
                             break;
                         case R.id.action_explore:
-                            selectedFragment = new ExploreFragment();
+                            selectedFragment = new PostFragment();
                             break;
                         case R.id.action_profile:
                             SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                             editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             editor.apply();
                             selectedFragment = new ProfileFragment();
+                            break;
+                        case R.id.action_search:
+                            selectedFragment = new SearchFragment();
+                            break;
+                        case R.id.action_question:
+                            selectedFragment = new WhiteBoardFragment();
                             break;
                     }
 

@@ -238,8 +238,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void registerToDatabase(GoogleSignInAccount account){
-
-
         String userID = account.getId();
         String username = account.getDisplayName().toLowerCase();
         String email = account.getEmail().toLowerCase();
