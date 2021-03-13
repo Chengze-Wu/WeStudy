@@ -4,12 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.appliedproject.westudy.R;
@@ -19,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,8 +32,15 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.royrodriguez.transitionbutton.TransitionButton;
 import com.royrodriguez.transitionbutton.utils.WindowUtils;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,12 +53,17 @@ public class LoginActivity extends AppCompatActivity {
     //firebase instance
     private FirebaseAuth mFirebaseAuth;
 
+    //firebase database
+    DatabaseReference reference;
+
+    //textview
+    EditText txtEmail, txtPassword;
     //buttons
     private Button btnRegister;
 
 
     //animation login button
-    private TransitionButton transitionButton;
+    private TransitionButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +73,18 @@ public class LoginActivity extends AppCompatActivity {
         //animation button
         WindowUtils.makeStatusbarTransparent(this);
 
+        //initialize
+        txtEmail = findViewById(R.id.txtEmailAddress);
+        txtPassword = findViewById(R.id.txtPassword);
+        btnRegister = findViewById(R.id.btnRegister);
+
 
 
         mBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+
 
         mBinding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +113,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //Login button
-        transitionButton = findViewById(R.id.transition_button);
+        btnLogin = findViewById(R.id.transition_button);
 
-        transitionButton.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Then start the loading animation when the user tap the button
-                transitionButton.startAnimation();
+                btnLogin.startAnimation();
 
                 // Do your networking task or background work here.
                 final Handler handler = new Handler();
@@ -104,16 +129,54 @@ public class LoginActivity extends AppCompatActivity {
                         boolean isSuccessful = true;
 
                         if (isSuccessful) {
-                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
                                 @Override
                                 public void onAnimationStopEnd() {
-                                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
+                                    final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                                    pd.setMessage("Please wait...");
+                                    pd.show();
+
+                                    String strEmail = txtEmail.getText().toString();
+                                    String strPassword = txtPassword.getText().toString();
+
+                                    if (TextUtils.isEmpty(strEmail) || TextUtils.isEmpty(strPassword)){
+                                        Toast.makeText(LoginActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+                                        //btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+                                    } else{
+                                        mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPassword)
+                                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                        if(task.isSuccessful()){
+                                                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                                                                    .child(mFirebaseAuth.getCurrentUser().getUid());
+
+                                                            reference.addValueEventListener(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    pd.dismiss();
+                                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                                    pd.dismiss();
+                                                                }
+                                                            });
+                                                        }else{
+                                                            pd.dismiss();
+                                                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
                                 }
                             });
                         } else {
-                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
                         }
                     }
                 }, 2000);
@@ -144,6 +207,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Log.d(TAG, "signInWIthCredential:success");
+                        registerToDatabase(account);
+
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
@@ -162,11 +227,32 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
+
     }
 
     //register
     private void signUp(){
         Intent signUpIntent = new Intent(this, RegisterActivity.class);
         startActivityForResult(signUpIntent,RC_SIGN_IN);
+    }
+
+    private void registerToDatabase(GoogleSignInAccount account){
+
+
+        String userID = account.getId();
+        String username = account.getDisplayName().toLowerCase();
+        String email = account.getEmail().toLowerCase();
+        String photoUrl = account.getPhotoUrl().toString();
+
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", userID);
+        map.put("username", username.toLowerCase());
+        map.put("email", email);
+        map.put("photourl", photoUrl);
+        map.put("coins", 0);
+        reference.setValue(map);
     }
 }
