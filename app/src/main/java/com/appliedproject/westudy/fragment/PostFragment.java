@@ -38,7 +38,6 @@ public class PostFragment extends Fragment {
     private PostAdapter postAdapter;
     private List<PostingEntity> postList;
 
-    private RecyclerView recyclerView_story;
 
     private List<String> followingList;
 

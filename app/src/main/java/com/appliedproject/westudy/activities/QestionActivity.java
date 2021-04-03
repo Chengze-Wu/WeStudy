@@ -30,6 +30,10 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
+/*
+    User will ask question by using question acitivity
+ */
+
 public class QestionActivity extends AppCompatActivity {
     Uri imageUri;
     String myUri = "";
