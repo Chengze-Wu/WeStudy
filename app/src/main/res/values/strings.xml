@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">WeStudy</string>
 
-    <string name="main_title">Transition Button</string>
+    <string name="main_title">WeStudy</string>
     <string name="main_button">login</string>
     <string name="main_email_hint">Email</string>
     <string name="main_password_hint">Password</string>
@@ -18,6 +18,8 @@
     <string name="main_username_hint">UserName</string>
     <string name="add_post">Add Post</string>
     <string name="post_hint">Post Content...</string>
+    <string name="qestion_content">Qestion Content</string>
+    <string name="question_hint">Qestion Description...</string>
 
 
 </resources>
