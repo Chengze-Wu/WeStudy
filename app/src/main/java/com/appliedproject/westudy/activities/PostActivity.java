@@ -32,7 +32,10 @@ import com.google.firebase.storage.StorageTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
-
+/*
+ Feature for adding posts
+ user will post an image and leave description
+ */
 public class PostActivity extends AppCompatActivity {
     Uri imageUri;
     String myUri = "";
@@ -56,21 +59,13 @@ public class PostActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("posts");
 
         //close button
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PostActivity.this, MainActivity.class));
-                finish();
-            }
+        imageClose.setOnClickListener(view -> {
+            startActivity(new Intent(PostActivity.this, MainActivity.class));
+            finish();
         });
 
         //post button
-        post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
+        post.setOnClickListener(view -> uploadImage());
 
         CropImage.activity()
                 .setAspectRatio(1,1)

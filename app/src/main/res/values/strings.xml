@@ -17,6 +17,7 @@
     <string name="title_activity_explore">ExploreActivity</string>
     <string name="main_username_hint">UserName</string>
     <string name="add_post">Add Post</string>
+    <string name="post_hint">Post Content...</string>
 
 
 </resources>
