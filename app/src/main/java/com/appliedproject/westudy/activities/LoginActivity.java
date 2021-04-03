@@ -132,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                             btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
                                 @Override
                                 public void onAnimationStopEnd() {
+
                                     final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
                                     pd.setMessage("Please wait...");
                                     pd.show();
