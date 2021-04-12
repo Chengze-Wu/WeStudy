@@ -7,6 +7,7 @@
     <uses-feature android:name="android.hardware.type.watch" /> <!-- Image permission -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeStudy">
-        <activity android:name=".activities.CoStudy"></activity>
+        <activity android:name=".activities.CommentsActivity"></activity>
+        <activity android:name=".activities.CoStudyScope" />
+        <activity android:name=".activities.MessageActivity" />
+        <activity android:name=".activities.CoStudy" />
         <activity android:name=".activities.IndividualStudy" />
         <activity android:name=".activities.QestionActivity" />
         <activity android:name=".activities.PostActivity" />

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appliedproject.westudy.R;
@@ -57,13 +58,15 @@ public class LoginActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     //textview
-    EditText txtEmail, txtPassword;
+    EditText email, password;
     //buttons
-    private Button btnRegister;
+    private Button btnRegister, btnLogin;
+
+
 
 
     //animation login button
-    private TransitionButton btnLogin;
+    //private TransitionButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
         WindowUtils.makeStatusbarTransparent(this);
 
         //initialize
-        txtEmail = findViewById(R.id.txtEmailAddress);
-        txtPassword = findViewById(R.id.txtPassword);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
         btnRegister = findViewById(R.id.btnRegister);
 
 
@@ -118,71 +121,123 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Then start the loading animation when the user tap the button
-                btnLogin.startAnimation();
+                final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                pd.setMessage("Please wait...");
+                pd.show();
 
-                // Do your networking task or background work here.
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean isSuccessful = true;
+                String strEmail = "marcelo@me.com";//email.getText().toString();
+                String strPassword = "123456";//password.getText().toString();
 
-                        if (isSuccessful) {
-                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+
+                if (TextUtils.isEmpty(strEmail) || TextUtils.isEmpty(strPassword)){
+                    Toast.makeText(LoginActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+
+
+                } else{
+                    mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPassword)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onAnimationStopEnd() {
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                                                .child(mFirebaseAuth.getCurrentUser().getUid());
 
-                                    final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
-                                    pd.setMessage("Please wait...");
-                                    pd.show();
+                                        reference.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                pd.dismiss();
+                                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                                finish();
+                                            }
 
-                                    String strEmail = txtEmail.getText().toString();
-                                    String strPassword = txtPassword.getText().toString();
-
-                                    if (TextUtils.isEmpty(strEmail) || TextUtils.isEmpty(strPassword)){
-                                        Toast.makeText(LoginActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
-                                        //btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
-                                    } else{
-                                        mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPassword)
-                                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                                        if(task.isSuccessful()){
-                                                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
-                                                                    .child(mFirebaseAuth.getCurrentUser().getUid());
-
-                                                            reference.addValueEventListener(new ValueEventListener() {
-                                                                @Override
-                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                    pd.dismiss();
-                                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                                    startActivity(intent);
-                                                                    finish();
-                                                                }
-
-                                                                @Override
-                                                                public void onCancelled(@NonNull DatabaseError error) {
-                                                                    pd.dismiss();
-                                                                }
-                                                            });
-                                                        }else{
-                                                            pd.dismiss();
-                                                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                pd.dismiss();
+                                            }
+                                        });
+                                    }else{
+                                        pd.dismiss();
+                                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-                        } else {
-                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
-                        }
-                    }
-                }, 2000);
+                }
+
             }
         });
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Then start the loading animation when the user tap the button
+//                btnLogin.startAnimation();
+//
+//                // Do your networking task or background work here.
+//                final Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        boolean isSuccessful = true;
+//
+//                        if (isSuccessful) {
+//                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+//                                @Override
+//                                public void onAnimationStopEnd() {
+//
+//                                    final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+//                                    pd.setMessage("Please wait...");
+//                                    pd.show();
+//
+//                                    strEmail = txtEmail.getText().toString();
+//                                    strPassword = txtPassword.getText().toString();
+//
+//
+//                                    if (strEmail.equals("") || strPassword.equals("")){
+//                                        Log.d("Login Email---------------", strEmail);
+//                                        Toast.makeText(LoginActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+//
+//                                        btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+//                                    } else{
+//                                        mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPassword)
+//                                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+//                                                    @Override
+//                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                                                        if(task.isSuccessful()){
+//                                                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+//                                                                    .child(mFirebaseAuth.getCurrentUser().getUid());
+//
+//                                                            reference.addValueEventListener(new ValueEventListener() {
+//                                                                @Override
+//                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                                    pd.dismiss();
+//                                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                                                    startActivity(intent);
+//                                                                    finish();
+//                                                                }
+//
+//                                                                @Override
+//                                                                public void onCancelled(@NonNull DatabaseError error) {
+//                                                                    pd.dismiss();
+//                                                                }
+//                                                            });
+//                                                        }else{
+//                                                            pd.dismiss();
+//                                                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//                                                });
+//                                    }
+//                                }
+//                            });
+//                        } else {
+//                            btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+//                        }
+//                    }
+//                }, 2000);
+//            }
+//        });
     }
 
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.appliedproject.westudy.R;
 import com.appliedproject.westudy.database.UserEntity;
-import com.appliedproject.westudy.fragment.ChatsFragment;
+import com.appliedproject.westudy.fragment.ChatFragment;
 import com.appliedproject.westudy.fragment.UsersFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
@@ -73,7 +73,7 @@ public class CoStudy extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         final ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new ChatsFragment(),"Chats");
+        viewPagerAdapter.addFragment(new ChatFragment(),"Chats");
         viewPagerAdapter.addFragment(new UsersFragment(),"Users");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
