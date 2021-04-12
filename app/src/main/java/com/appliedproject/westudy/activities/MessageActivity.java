@@ -249,16 +249,16 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        status("online");
-        currentUser(userid);
+//        status("online");
+//        currentUser(userid);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        reference.removeEventListener(seenListener);
-        status("offline");
-        currentUser("none");
+//        reference.removeEventListener(seenListener);
+//        status("offline");
+//        currentUser("none");
     }
 
     private void readMessages(String myid, String userid, String photourl){

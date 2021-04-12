@@ -90,7 +90,7 @@ public class DuringStudyFragment extends Fragment {
     }
 
     private void initialTimer(int timeLength){
-        long duration = TimeUnit.MINUTES.toMillis(1);
+        long duration = TimeUnit.MINUTES.toMillis(timeLength);
 
         new CountDownTimer(duration, 1000) {
             @Override

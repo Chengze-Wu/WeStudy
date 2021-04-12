@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 pd.setMessage("Please wait...");
                 pd.show();
 
-                String strEmail = "marcelo@me.com";//email.getText().toString();
+                String strEmail = "jonh@gmail.com";//email.getText().toString();
                 String strPassword = "123456";//password.getText().toString();
 
 

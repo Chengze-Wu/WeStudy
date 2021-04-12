@@ -1,90 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     tools:context=".activities.CoStudyScope">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_gravity="center"
-        android:textSize="45dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Individual Study" />
-    <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom"
+        android:id="@+id/fragment_container"/>
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Study Goal:"/>
-        <EditText
-            android:id="@+id/task_goal"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Topic:" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/topics_spinner"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shared with:" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/shared_user"
-            android:text="User"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Description..."/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:padding="10dp"
-            android:maxLines="5"
-            android:background="@drawable/edit_text_background"
-            android:layout_margin="10dp"/>
-    </LinearLayout>
-    <com.sdsmdg.harjot.crollerTest.Croller
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/croller"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:background="@drawable/rounded_background"
-        android:id="@+id/btnStart"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true">
+    </com.google.android.material.appbar.AppBarLayout>
+</RelativeLayout>
