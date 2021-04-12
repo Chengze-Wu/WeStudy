@@ -208,7 +208,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Log.d(TAG, "signInWIthCredential:success");
-                        registerToDatabase(account);
+                        String uid = mFirebaseAuth.getUid();
+                        registerToDatabase(account,uid);
 
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
@@ -238,8 +239,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signUpIntent,RC_SIGN_IN);
     }
 
-    private void registerToDatabase(GoogleSignInAccount account){
-        String userID = account.getId();
+    private void registerToDatabase(GoogleSignInAccount account, String uid){
+        String userID = uid;
         String username = account.getDisplayName().toLowerCase();
         String email = account.getEmail().toLowerCase();
         String photoUrl = account.getPhotoUrl().toString();

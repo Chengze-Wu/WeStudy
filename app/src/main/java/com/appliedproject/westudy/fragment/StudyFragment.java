@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.appliedproject.westudy.R;
+import com.appliedproject.westudy.activities.CoStudy;
 import com.appliedproject.westudy.activities.IndividualStudy;
 import com.google.android.material.slider.RangeSlider;
 
@@ -33,9 +34,15 @@ public class StudyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button btnIndividual = view.findViewById(R.id.btnStudyIndividual);
+        Button btnCoStudy = view.findViewById(R.id.btnStudyColla);
         btnIndividual.setOnClickListener(View->{
             Intent intent = new Intent(view.getContext(), IndividualStudy.class);
             startActivity(intent);
         });
+        btnCoStudy.setOnClickListener(View-> {
+            Intent intent = new Intent(view.getContext(), CoStudy.class);
+            startActivity(intent);
+        });
+
     }
 }
