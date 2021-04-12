@@ -72,6 +72,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    implementation 'androidx.compose.material:material:1.0.0-beta04'
+    compile 'com.sdsmdg.harjot:croller:1.0.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

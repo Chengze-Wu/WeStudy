@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topics_array">
+        <item>Computer Science</item>
+        <item>Business</item>
+        <item>Earth</item>
+        <item>Economics</item>
+        <item>Language</item>
+        <item>Education</item>
+        <item>Law</item>
+        <item>Environment</item>
+    </string-array>
+</resources>

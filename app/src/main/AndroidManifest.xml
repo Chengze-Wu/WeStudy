@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeStudy">
-        <activity android:name=".activities.QestionActivity"></activity>
+        <activity android:name=".activities.IndividualStudy"></activity>
+        <activity android:name=".activities.QestionActivity" />
         <activity android:name=".activities.PostActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity" /> <!-- <intent-filter> -->

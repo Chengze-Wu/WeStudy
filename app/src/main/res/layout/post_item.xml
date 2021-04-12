@@ -92,6 +92,12 @@
             android:text="description"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/description"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/reviewer"/>
 
         <TextView
             android:layout_width="wrap_content"
